@@ -17,7 +17,7 @@ var linkedinClientSecret
 
 // Mobile App URL Scheme
 
-var iosEndpoint = 'testapp12345://authorize'
+var iosEndpoint = 'testapp12345://authorize/linkedin'
 
 // LinkedIn iOS kickoff
 app.get('/login/linkedin/ios', function(req, res) {
