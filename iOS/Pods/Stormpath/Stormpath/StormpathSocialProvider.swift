@@ -16,12 +16,17 @@ import Foundation
     /// Google Login
     case Google
     
+    /// LinkedIn Login
+    case LinkedIn
+    
     func stringValue() -> String {
         switch self {
         case .Facebook:
             return "facebook"
         case .Google:
             return "google"
+        case .LinkedIn:
+            return "linkedin"
         }
     }
 }
