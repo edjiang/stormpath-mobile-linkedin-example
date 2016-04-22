@@ -9,7 +9,7 @@ As I wrote this really quickly, please open up a GitHub issue if you want me to 
 ## Setup
 
 1. Make sure you have a Stormpath Application with a LinkedIn directory configured.
-2. In the LinkedIn developer site, configure `http://localhost:3000/callbacks/linkedin/ios` as a callback URL
+2. In the LinkedIn developer site, configure `http://localhost:3000/callbacks/linkedin/ios` as a callback URL. Also, make sure `r_emailaddress` is checked.
 3. Clone this repository. 
 4. Run `npm install` in the `server` directory to install server modules
 5. Run the server using `node index.js`
