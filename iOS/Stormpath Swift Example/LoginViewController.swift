@@ -8,10 +8,12 @@
 
 import UIKit
 import Stormpath
+import SafariServices
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    var safari: UIViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +40,18 @@ class LoginViewController: UIViewController {
         Stormpath.sharedSession.login(socialProvider: .Google, completionHandler: loginCompletionHandler)
     }
     
+    @IBAction func loginWithLinkedin(sender: AnyObject) {
+        let linkedinLoginURL = NSURL(string: "http://localhost:3000/login/linkedin/ios")!
+        if #available(iOS 9, *) {
+            safari = SFSafariViewController(URL: linkedinLoginURL)
+            presentViewController(safari!, animated: true, completion: nil)
+        } else {
+            UIApplication.sharedApplication().openURL(linkedinLoginURL)
+        }
+    }
+    
     func loginCompletionHandler(success: Bool, error: NSError?) {
+        safari?.dismissViewControllerAnimated(false, completion: nil)
         guard success else {
             self.showAlert(withTitle: "Error", message: error?.localizedDescription ?? "")
             return

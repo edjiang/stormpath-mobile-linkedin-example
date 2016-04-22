@@ -44,12 +44,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+        linkedinCallback(url)
         return Stormpath.sharedSession.application(app, openURL: url, options: options)
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        linkedinCallback(url)
         return Stormpath.sharedSession.application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+    }
+    
+    func linkedinCallback(url: NSURL) {
+        if url.scheme == "testapp12345" && url.host == "authorize" && url.path == "/linkedin" {
+            if let accessToken = url.queryDictionary["access_token"] {
+                let loginViewController = window?.rootViewController as? LoginViewController
+                Stormpath.sharedSession.login(socialProvider: .LinkedIn, accessToken: accessToken, completionHandler: loginViewController?.loginCompletionHandler)
+            }
+        }
     }
 
 }
 
+extension NSURL {
+    /// Dictionary with key/value pairs from the URL query string
+    var queryDictionary: [String: String] {
+        return dictionaryFromFormEncodedString(query)
+    }
+    
+    private func dictionaryFromFormEncodedString(input: String?) -> [String: String] {
+        var result = [String: String]()
+        
+        guard let input = input else {
+            return result
+        }
+        let inputPairs = input.componentsSeparatedByString("&")
+        
+        for pair in inputPairs {
+            let split = pair.componentsSeparatedByString("=")
+            if split.count == 2 {
+                if let key = split[0].stringByRemovingPercentEncoding, value = split[1].stringByRemovingPercentEncoding {
+                    result[key] = value
+                }
+            }
+        }
+        return result
+    }
+}
