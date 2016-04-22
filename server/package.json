@@ -1,0 +1,16 @@
+{
+  "name": "Stormpath Mobile LinkedIn Sign-In",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Edward Jiang",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express-stormpath": "^3.1.2"
+  }
+}
+
